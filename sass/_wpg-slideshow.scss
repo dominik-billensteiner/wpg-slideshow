@@ -1,0 +1,48 @@
+.wpg-slideshow {
+  position: relative;
+  margin-top: 2rem !important;
+  margin-bottom: 3rem !important;
+
+  & .blocks-gallery-item__caption {
+    display: none;
+  }
+
+  &__caption {
+    margin-bottom: 4rem !important;
+    margin-top: -2.5rem !important;
+    z-index: 9999999;
+  }
+
+  &__container {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__img {
+    display: block;
+    position: relative !important;
+    height: 100%;
+    width: auto !important;
+    max-height: 60vh;
+
+    @include media(">phone") {
+      max-height: 50vh;
+    }
+  }
+
+  &__button {
+    position: relative;
+    width: 20px;
+    padding-bottom: 1rem;
+    color: #333;
+    font-size: 1em;
+    user-select: none;
+    cursor: pointer;
+
+    &:hover {
+      color: #999;
+    }
+  }
+}

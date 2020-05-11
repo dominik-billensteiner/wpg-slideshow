@@ -1,0 +1,9 @@
+/* style.scss
+ * styles for wpg-slideshow.*/
+
+@charset 'utf-8';
+
+/* Import media query library */
+@import "../node_modules/include-media/dist/_include-media.scss";
+
+@import "_wpg-slideshow.scss";
