@@ -1,13 +1,13 @@
 /**
- * Start slideshow, when DOM is fully loaded.
+ * Start slideshow when DOM is fully loaded.
  */
 document.addEventListener("DOMContentLoaded", function () {
-  let slideshow = new WPGSlideshow("wpg-slideshow");
+  let slideshow = new WPGSlideshow();
   slideshow.activate();
 });
 
 /**
- * Class to enable Slideshow functionality for WP Gallery Blocks.
+ * Class to enable slideshow functionality for WP Gallery Blocks.
  */
 class WPGSlideshow {
   ssClassName: string; // Class name of slideshow.
@@ -17,23 +17,26 @@ class WPGSlideshow {
   /**
    * @constructor
    * Default constructor.
-   *
-   * @param {string} - Freely choosable class name of slideshow container.
    */
-  constructor(className: string) {
-    this.ssClassName = className ? className : "wpg-slideshow";
+  constructor() {
+    // Set classname of slideshow.
+    this.ssClassName = "wpg-slideshow";
+
+    // Initialize empty Array.
     this.slideshows = new Array();
 
-    // Get slideshow HTML object array and activate slideshow
+    // Get slideshows as Nodelist-Array
     this.slideshowsNodeList = document.querySelectorAll("." + this.ssClassName);
   }
 
   /**
-   * Injects slideshow markup and adds functionality for Slideshows.
+   * Injects slideshow markup and adds functionality for slideshows.
    */
   activate() {
+    // Check if the site contains any slideshows
     if (this.slideshowsNodeList) {
-      let ssID: number = 0; // Identifier for slideshow HTML elements
+      // Identifier for slideshow HTML elements
+      let ssID: number = 0;
 
       // Inject markup for every slideshow
       this.slideshowsNodeList.forEach((slideshow) => {
@@ -41,7 +44,7 @@ class WPGSlideshow {
         let ssIDText: string = "wpg-slideshow-" + ssID;
         slideshow.setAttribute("id", ssIDText);
 
-        // Get all WP-Block-Gallery Elements
+        // Get all WP-Block-Gallery elements
         let containerNodeList: NodeListOf<Element> = slideshow.querySelectorAll(
           ".blocks-gallery-grid"
         );
@@ -90,28 +93,25 @@ class WPGSlideshow {
   /**
    * Add navigations buttons (next/prev) to slideshow container.
    *
-   * @param {any} - Slideshow container html element.
-   * @param {number} - Slideshow id.
-   * @param {string} - Button type ("prev" or "next").
+   * @param {any} parent - Slideshow container html element.
+   * @param {number} number - Slideshow id.
+   * @param {string} btnType - Button type ("prev" or "next").
    */
   addNavButton(parent: any, btnID: number, btnType: string) {
     // Assign '<' for prev and '>' for next
     let icon = btnType === "prev" ? "&#10094" : "&#10095";
 
+    // Insert button before parent (displays on top of slideshow).
     parent.insertAdjacentHTML(
       "beforebegin",
       `<a id= 'wpg-slideshow-${btnID.toString()}-${btnType}' class='wpg-slideshow__button wpg-slideshow__button--${btnType}'
-    data-ssid=${btnID.toString()}>${icon}</a>`
+      data-ssid=${btnID.toString()}>${icon}</a>`
     );
-
-    /* Build markup for button
-    parent.innerHTML += `<a id= 'wpg-slideshow-${btnID.toString()}-${btnType}' class='wpg-slideshow__button wpg-slideshow__button--${btnType}'
-    data-ssid=${btnID.toString()}>${icon}</a>`; // data-ssid is used for eventhandling in changeSlides()*/
   }
 
   /**
    * Add event handler for navigation buttons.
-   * @param {number} - Button (=slideshow) ID.
+   * @param {number} btnID - Button (=slideshow) ID.
    */
   addNavButtonEvents(btnID: number) {
     // Get previous button
@@ -138,8 +138,8 @@ class WPGSlideshow {
   /**
    * Changes slides to next or previous.
    *
-   * @param {Object} - Clicked button as html element.
-   * @param {Number} - Value which changes index of slideshow (-1/+1).
+   * @param {Object} btn - Clicked button as html element.
+   * @param {Number} changeValue - Value which changes index of slideshow (-1/+1).
    */
   changeSlides(btn: any, changeValue: number) {
     // Get changing slideshow
@@ -188,8 +188,8 @@ class Slideshow {
    * @constructor
    * Default constructor.
    *
-   * @param {number} - Slideshow id.
-   * @param {number} - Slideshow image count (or number of slides).
+   * @param {number} id - Slideshow id.
+   * @param {number} imageCount - Slideshow image count (or number of slides).
    */
   constructor(id: number, imageCount: number) {
     this.id = id;

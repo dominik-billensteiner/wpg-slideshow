@@ -1,39 +1,41 @@
 /**
- * Start slideshow, when DOM is fully loaded.
+ * Start slideshow when DOM is fully loaded.
  */
 document.addEventListener("DOMContentLoaded", function () {
-    var slideshow = new WPGSlideshow("wpg-slideshow");
+    var slideshow = new WPGSlideshow();
     slideshow.activate();
 });
 /**
- * Class to enable Slideshow functionality for WP Gallery Blocks.
+ * Class to enable slideshow functionality for WP Gallery Blocks.
  */
 var WPGSlideshow = /** @class */ (function () {
     /**
      * @constructor
      * Default constructor.
-     *
-     * @param {string} - Freely choosable class name of slideshow container.
      */
-    function WPGSlideshow(className) {
-        this.ssClassName = className ? className : "wpg-slideshow";
+    function WPGSlideshow() {
+        // Set classname of slideshow.
+        this.ssClassName = "wpg-slideshow";
+        // Initialize empty Array.
         this.slideshows = new Array();
-        // Get slideshow HTML object array and activate slideshow
+        // Get slideshows as Nodelist-Array
         this.slideshowsNodeList = document.querySelectorAll("." + this.ssClassName);
     }
     /**
-     * Injects slideshow markup and adds functionality for Slideshows.
+     * Injects slideshow markup and adds functionality for slideshows.
      */
     WPGSlideshow.prototype.activate = function () {
         var _this = this;
+        // Check if the site contains any slideshows
         if (this.slideshowsNodeList) {
-            var ssID_1 = 0; // Identifier for slideshow HTML elements
+            // Identifier for slideshow HTML elements
+            var ssID_1 = 0;
             // Inject markup for every slideshow
             this.slideshowsNodeList.forEach(function (slideshow) {
                 // Build ID for slideshow html container
                 var ssIDText = "wpg-slideshow-" + ssID_1;
                 slideshow.setAttribute("id", ssIDText);
-                // Get all WP-Block-Gallery Elements
+                // Get all WP-Block-Gallery elements
                 var containerNodeList = slideshow.querySelectorAll(".blocks-gallery-grid");
                 // Run trough gallery containers
                 containerNodeList.forEach(function (container) {
@@ -71,21 +73,19 @@ var WPGSlideshow = /** @class */ (function () {
     /**
      * Add navigations buttons (next/prev) to slideshow container.
      *
-     * @param {any} - Slideshow container html element.
-     * @param {number} - Slideshow id.
-     * @param {string} - Button type ("prev" or "next").
+     * @param {any} parent - Slideshow container html element.
+     * @param {number} number - Slideshow id.
+     * @param {string} btnType - Button type ("prev" or "next").
      */
     WPGSlideshow.prototype.addNavButton = function (parent, btnID, btnType) {
         // Assign '<' for prev and '>' for next
         var icon = btnType === "prev" ? "&#10094" : "&#10095";
-        parent.insertAdjacentHTML("beforebegin", "<a id= 'wpg-slideshow-" + btnID.toString() + "-" + btnType + "' class='wpg-slideshow__button wpg-slideshow__button--" + btnType + "'\n    data-ssid=" + btnID.toString() + ">" + icon + "</a>");
-        /* Build markup for button
-        parent.innerHTML += `<a id= 'wpg-slideshow-${btnID.toString()}-${btnType}' class='wpg-slideshow__button wpg-slideshow__button--${btnType}'
-        data-ssid=${btnID.toString()}>${icon}</a>`; // data-ssid is used for eventhandling in changeSlides()*/
+        // Insert button before parent (displays on top of slideshow).
+        parent.insertAdjacentHTML("beforebegin", "<a id= 'wpg-slideshow-" + btnID.toString() + "-" + btnType + "' class='wpg-slideshow__button wpg-slideshow__button--" + btnType + "'\n      data-ssid=" + btnID.toString() + ">" + icon + "</a>");
     };
     /**
      * Add event handler for navigation buttons.
-     * @param {number} - Button (=slideshow) ID.
+     * @param {number} btnID - Button (=slideshow) ID.
      */
     WPGSlideshow.prototype.addNavButtonEvents = function (btnID) {
         var _this = this;
@@ -105,8 +105,8 @@ var WPGSlideshow = /** @class */ (function () {
     /**
      * Changes slides to next or previous.
      *
-     * @param {Object} - Clicked button as html element.
-     * @param {Number} - Value which changes index of slideshow (-1/+1).
+     * @param {Object} btn - Clicked button as html element.
+     * @param {Number} changeValue - Value which changes index of slideshow (-1/+1).
      */
     WPGSlideshow.prototype.changeSlides = function (btn, changeValue) {
         // Get changing slideshow
@@ -145,8 +145,8 @@ var Slideshow = /** @class */ (function () {
      * @constructor
      * Default constructor.
      *
-     * @param {number} - Slideshow id.
-     * @param {number} - Slideshow image count (or number of slides).
+     * @param {number} id - Slideshow id.
+     * @param {number} imageCount - Slideshow image count (or number of slides).
      */
     function Slideshow(id, imageCount) {
         this._startIndex = 1;
