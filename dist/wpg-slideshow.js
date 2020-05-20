@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Start slideshow when DOM is fully loaded.
  */

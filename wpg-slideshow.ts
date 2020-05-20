@@ -167,7 +167,7 @@ class WPGSlideshow {
       // Next or previous button pressed, change slide accordingly
       slideshow.changeIndex(changeValue);
     }
-    let newSlide = document.getElementById(`wpg-slide-${slideshow.index}`);
+    let newSlide: any = document.getElementById(`wpg-slide-${slideshow.index}`);
     newSlide.style.display = "block";
 
     // Put changed slideshow back on array
