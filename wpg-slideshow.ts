@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   slideshow.activate();
 });
 
+// Activate console logging for debugging purposes.
+const wpgDebugging: boolean = false;
+
 /**
  * Class to enable slideshow functionality for WP Gallery Blocks.
  */
@@ -152,9 +155,12 @@ class WPGSlideshow {
     );
     currentSlide.style.display = "none";
 
-    console.log("%c Changing slides:", "color: green; font-weight: bold;");
-    console.log(`Current Slide ID: ${slideshow.index}`);
-    console.log(`Change Value: ${changeValue}`);
+    // Debugging info
+    if (wpgDebugging === true) {
+      console.log("%c Changing slides:", "color: green; font-weight: bold;");
+      console.log(`Current Slide ID: ${slideshow.index}`);
+      console.log(`Change Value: ${changeValue}`);
+    }
 
     // Show the newly selected slide
     if (slideshow.index == 1 && changeValue == -1) {
@@ -173,8 +179,11 @@ class WPGSlideshow {
     // Put changed slideshow back on array
     this.slideshows[id] = slideshow;
 
-    console.log(`Next Slide ID: ${slideshow.index}`);
-    console.log(`Image Count: ${slideshow.imageCount}`);
+    // Debugging info
+    if (wpgDebugging === true) {
+      console.log(`Next Slide ID: ${slideshow.index}`);
+      console.log(`Image Count: ${slideshow.imageCount}`);
+    }
   }
 }
 
