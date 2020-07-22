@@ -66,7 +66,7 @@ class WPGSlideshow {
           // Add id, wpg slideshow classes and styles to items and imgs
           items.forEach((item) => {
             itemID++;
-            item.id = "wpg-slide-" + itemID; // First id has value of 1
+            item.id = "wpg-slide-" + ssID + "-" + itemID; // First id has value of 1
             item.classList.add("wpg-slideshow__item");
             item.style.cssText = "margin-bottom: 0!important"; // Overwrite default margin of wp-block-gallery
             item.style.display = itemID === 1 ? "block" : "none"; // Show first img, hide rest
@@ -89,6 +89,7 @@ class WPGSlideshow {
           let ssObj: Slideshow = new Slideshow(ssID, itemID);
           this.slideshows.push(ssObj);
         });
+        ssID++;
       });
     }
   }
@@ -151,7 +152,7 @@ class WPGSlideshow {
 
     // Hide current slide
     let currentSlide: any = document.getElementById(
-      `wpg-slide-${slideshow.index}`
+      `wpg-slide-${id}-${slideshow.index}`
     );
     currentSlide.style.display = "none";
 
@@ -173,7 +174,9 @@ class WPGSlideshow {
       // Next or previous button pressed, change slide accordingly
       slideshow.changeIndex(changeValue);
     }
-    let newSlide: any = document.getElementById(`wpg-slide-${slideshow.index}`);
+    let newSlide: any = document.getElementById(
+      `wpg-slide-${id}-${slideshow.index}`
+    );
     newSlide.style.display = "block";
 
     // Put changed slideshow back on array
